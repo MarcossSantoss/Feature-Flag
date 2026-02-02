@@ -15,29 +15,12 @@ namespace FeatureFlag.Api.Controllers
             _service = service;
         }
 
-        [HttpPost]
-        public async Task<IActionResult> CreateFlag([FromBody] CreateFeatureFlagDto dto)
-        {
-            await _service.CreateFlagAsync(dto);
-            return Created(string.Empty, null);
-        }
-
         [HttpGet]
-        public async Task<IActionResult> GetFlags([FromQuery] string env)
+        public async Task<IActionResult> GetFeaturePercentageAsync()
         {
-            var flags = await _service.GetFlagsAsync(env);
-            return Ok(flags);
-        }
+            var percentage = await _service.GetPercentage();
 
-        [HttpGet("{key}")]
-        public async Task<IActionResult> GetFlagByKey(string key, [FromQuery] string env)
-        {
-            var flag = await _service.GetFlagByKeyAsync(key, env);
-
-            if (flag == null)
-                return NotFound();
-
-            return Ok(flag);
+            return Ok(percentage);
         }
     }
 }

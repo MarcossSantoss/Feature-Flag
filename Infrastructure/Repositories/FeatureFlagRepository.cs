@@ -1,32 +1,28 @@
-﻿//using FeatureFlag.Application.Services;
-//using FeatureFlag.Domain.Entities;
-//using Microsoft.EntityFrameworkCore;
+﻿using FeatureFlag.Infrastructure.Redis;
+using StackExchange.Redis;
 
-//namespace FeatureFlag.Infrastructure.Repositories
-//{
-//    public class FeatureFlagRepository : IFeatureFlagRepository
-//    {
-//        //private readonly AppDbContext _context;
+namespace FeatureFlag.Infrastructure.Repositories
+{
+    public class FeatureFlagRepository : IFeatureFlagRepository
+    {
+        private readonly IDatabase _redis;
 
-//        //public FeatureFlagRepository(AppDbContext context)
-//        //{
-//        //    _context = context;
-//        //}
+        public FeatureFlagRepository(IConnectionMultiplexer redis)
+        {
+            _redis = redis.GetDatabase();
+        }
 
-//        public async Task AddAsync(FeatureFlagEntity featureFlag)
-//        {
-//            await _context.FeatureFlags.AddAsync(featureFlag);
-//            await _context.SaveChangesAsync();
-//        }
+        public async Task<int> GetPercentageAsync()
+        {
+            var value = await _redis.StringGetAsync(RedisKeys.FeaturePercentage);
 
-//        public async Task<IEnumerable<FeatureFlagEntity>> GetAllByEnvironmentAsync(string environment)
-//        {
-//            return await _context.FeatureFlags.Where(f => f.Environment == environment).ToListAsync();
-//        }
+            if (value.IsNullOrEmpty)
+                return 0;
 
-//        public async Task<FeatureFlagEntity?> GetByKeyAsync(string key, string environment)
-//        {
-//            return await _context.FeatureFlags.FirstOrDefaultAsync(f => f.Key == key && f.Environment == environment);
-//        }
-//    }
-//}
+            if (!int.TryParse(value.ToString(), out var percentage))
+                return 0;
+
+            return percentage;
+        }
+    }
+}

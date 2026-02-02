@@ -1,27 +1,24 @@
 ﻿using FeatureFlag.Application.DTOs;
 using FeatureFlag.Domain.Entities;
+using FeatureFlag.Infrastructure.Repositories;
+using Microsoft.AspNetCore.Mvc;
 
 namespace FeatureFlag.Application.Services
 {
     public class FeatureFlagService : IFeatureFlagService
     {
-        public FeatureFlagService()
+        private readonly IFeatureFlagRepository _flagRepository;
+
+        public FeatureFlagService(IFeatureFlagRepository flagRepository)
         {
+            _flagRepository = flagRepository;
         }
 
-        public Task CreateFlagAsync(CreateFeatureFlagDto dto)
+        public async Task<int> GetPercentage()
         {
-            throw new NotImplementedException();
+            var percentage = await _flagRepository.GetPercentageAsync();
+            return percentage;
         }
 
-        public Task<IEnumerable<FeatureFlagEntity>> GetFlagsAsync(string environment)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<FeatureFlagEntity?> GetFlagByKeyAsync(string key, string environment)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
