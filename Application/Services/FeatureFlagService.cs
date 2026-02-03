@@ -20,5 +20,12 @@ namespace FeatureFlag.Application.Services
             return percentage;
         }
 
+        public async Task SetPercentageAsync(int percentage)
+        {
+            if (percentage < 0 || percentage > 100)
+                throw new ArgumentException("Percentage must be between 0 and 100");
+
+            await _flagRepository.SetPercentageAsync(percentage);
+        }
     }
 }

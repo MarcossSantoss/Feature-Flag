@@ -1,5 +1,6 @@
 using FeatureFlag.Application.Services;
 using FeatureFlag.Infrastructure.Repositories;
+using FeatureFlag.Infrastructure.Extensions;
 using Microsoft.EntityFrameworkCore;
 using StackExchange.Redis;
 
@@ -9,7 +10,9 @@ builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 
 builder.Services.AddScoped<IFeatureFlagService, FeatureFlagService>();
-//builder.Services.AddScoped<IFeatureFlagRepository, FeatureFlagRepository>();
+builder.Services.AddScoped<IFeatureFlagRepository, FeatureFlagRepository>();
+
+builder.Services.AddInfrastructure(builder.Configuration);
 
 var app = builder.Build();
 

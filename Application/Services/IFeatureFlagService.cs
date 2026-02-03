@@ -6,6 +6,7 @@ namespace FeatureFlag.Application.Services
 {
     public interface IFeatureFlagService
     {
-        Task<int> GetPercentage(); 
+        Task<int> GetPercentage();
+        Task SetPercentageAsync(int percentage);
     }
 }

@@ -1,4 +1,4 @@
-﻿using FeatureFlag.Infrastructure.Redis;
+﻿using FeatureFlag.Infrastructure.Cache;
 using StackExchange.Redis;
 
 namespace FeatureFlag.Infrastructure.Repositories
@@ -24,5 +24,11 @@ namespace FeatureFlag.Infrastructure.Repositories
 
             return percentage;
         }
+
+        public async Task SetPercentageAsync(int percentage)
+        {
+            await _redis.StringSetAsync(RedisKeys.FeaturePercentage, percentage);
+        }
+
     }
 }

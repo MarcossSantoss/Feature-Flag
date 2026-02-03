@@ -22,5 +22,12 @@ namespace FeatureFlag.Api.Controllers
 
             return Ok(percentage);
         }
+
+        [HttpPost("admin")]
+        public async Task<IActionResult> SetFeaturePercentage([FromBody] int percentage)
+        {
+            await _service.SetPercentageAsync(percentage);
+            return NoContent();
+        }
     }
 }

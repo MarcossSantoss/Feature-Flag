@@ -1,6 +1,6 @@
 ﻿using StackExchange.Redis;
 
-namespace FeatureFlag.Infrastructure.Redis
+namespace FeatureFlag.Infrastructure.Cache
 {
     public static class RedisKeys
     {
