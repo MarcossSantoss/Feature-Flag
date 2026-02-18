@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using StackExchange.Redis;
+﻿using StackExchange.Redis;
 
 namespace FeatureFlag.Infrastructure.Extensions
 {

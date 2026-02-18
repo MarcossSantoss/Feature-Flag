@@ -1,7 +1,5 @@
-﻿using FeatureFlag.Application.DTOs;
-using FeatureFlag.Domain.Entities;
-using FeatureFlag.Infrastructure.Repositories;
-using Microsoft.AspNetCore.Mvc;
+﻿using FeatureFlag.Infrastructure.Repositories;
+using FeatureFlag.Interfaces;
 
 namespace FeatureFlag.Application.Services
 {

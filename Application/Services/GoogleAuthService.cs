@@ -1,20 +1,15 @@
-﻿using Google.Apis.Auth;
+﻿using FeatureFlag.Interfaces;
+using Google.Apis.Auth;
 
 namespace FeatureFlag.Application.Services
 {
-    public interface IGoogleAuthService
-    {
-        Task<GoogleJsonWebSignature.Payload> ValidateTokenAsync(string idToken);
-    }
-
     public class GoogleAuthService : IGoogleAuthService
     {
         private readonly string _clientId;
 
         public GoogleAuthService(IConfiguration configuration)
         {
-            _clientId = configuration["Google:ClientId"]
-                ?? throw new ArgumentNullException("Google:ClientId not configured");
+            _clientId = configuration["Google:ClientId"] ?? throw new ArgumentNullException("Google:ClientId not configured");
         }
 
         public async Task<GoogleJsonWebSignature.Payload> ValidateTokenAsync(string idToken)

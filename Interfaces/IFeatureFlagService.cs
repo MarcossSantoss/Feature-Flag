@@ -2,7 +2,7 @@
 using FeatureFlag.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
-namespace FeatureFlag.Application.Services
+namespace FeatureFlag.Interfaces
 {
     public interface IFeatureFlagService
     {

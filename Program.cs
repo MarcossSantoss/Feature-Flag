@@ -1,8 +1,7 @@
 using FeatureFlag.Application.Services;
-using FeatureFlag.Infrastructure.Repositories;
 using FeatureFlag.Infrastructure.Extensions;
-using Microsoft.EntityFrameworkCore;
-using StackExchange.Redis;
+using FeatureFlag.Infrastructure.Repositories;
+using FeatureFlag.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +11,8 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IFeatureFlagService, FeatureFlagService>();
 builder.Services.AddScoped<IFeatureFlagRepository, FeatureFlagRepository>();
+
+builder.Services.AddSingleton<IGoogleAuthService, GoogleAuthService>();
 
 builder.Services.AddInfrastructure(builder.Configuration);
 
@@ -23,7 +24,8 @@ builder.Services.AddCors(options =>
             policy
                 .WithOrigins("http://localhost:4200")
                 .AllowAnyHeader()
-                .AllowAnyMethod();
+                .AllowAnyMethod()
+                .AllowCredentials(); 
         });
 });
 
