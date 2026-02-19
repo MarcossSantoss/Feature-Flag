@@ -1,91 +1,97 @@
-﻿# Feature Flag System
+﻿# Feature Flag System (Backend)
 
-This project is a simple **Feature Flag system with percentage-based control**, created for study and backend architecture practice.
+This repository contains the **backend** of a simple **Feature Flag system with percentage-based rollout**, created for study and backend architecture practice.
 
-The main goal is to enable gradual feature rollout without requiring new deployments.
-
-The backend is built with **ASP.NET Core** and the frontend with **Angular**.
+The goal of this project is to demonstrate how feature flags can be managed centrally and released gradually **without requiring new deployments**.
 
 ---
 
 ## About the project
 
-Instead of using only ON/OFF feature flags, this system works with a **rollout percentage (0 to 100)**.
+Instead of using only ON/OFF feature flags, this system supports a **rollout percentage (0 to 100)**.
 
-This approach is commonly used in real-world systems to reduce risk when releasing new features.
+This strategy is widely used in real-world applications to:
+- reduce risk during releases
+- test features with a subset of users
+- gradually enable functionality
+
+All decision logic lives in the backend and is exposed through a REST API.
 
 ---
 
 ## How it works
 
-Each feature has a configurable percentage:
+Each feature has a configurable rollout percentage:
 
 - `0%` → feature disabled
 - `100%` → feature fully enabled
-- intermediate values enable the feature for part of the users
+- intermediate values → feature enabled for a portion of users
 
-The decision logic lives in the backend and is consumed by the frontend.
-
-The goal is to ensure:
-- consistent user experience
-- predictable behavior
-- centralized control
-
----
-
-## Application structure
-
-The project is split into two main parts:
-
-### Backend
-- Handles business rules
-- Manages Feature Flags and rollout percentages
-- Exposes a REST API
-
-### Frontend
-- Built with Angular
-- Consumes the API
-- Shows or hides features based on configuration
-- Includes an admin area to update rollout values
-
----
-
-## Admin area
-
-The admin area allows:
-
-- Updating feature rollout percentages
-- Saving configuration changes
-- Immediately affecting end-user behavior
-
-Access is restricted to authorized users.
+The backend is responsible for:
+- calculating feature availability
+- ensuring consistent behavior
+- centralizing feature control
 
 ---
 
 ## Architecture
 
-The backend follows a **Clean Architecture** approach, organized into:
+The backend is structured using **Clean Architecture principles**, focusing on clear separation of concerns and long-term maintainability.
 
-- Api
-- Application
-- Domain
-- Infrastructure
+![Clean Architecture diagram showing Api, Application, Domain, Infrastructure and Database layers](Assets/architecture.png)
 
-This structure helps with maintenance and future improvements.
+The project is divided into the following layers:
+
+- **Api**  
+  Responsible for handling HTTP requests, exposing REST endpoints, and configuring the application.  
+  This layer depends only on the Application layer.
+
+- **Application**  
+  Contains the core business logic and use cases of the system.  
+  It defines how feature flags are evaluated and orchestrates interactions between layers.
+
+- **Domain**  
+  Holds the core entities and business rules.  
+  This layer is independent and does not rely on any external frameworks or infrastructure.
+
+- **Infrastructure**  
+  Provides implementations for data access and external services.  
+  It contains repositories and persistence-related logic.
+
+This architecture improves **maintainability**, **testability**, and **scalability**, while keeping the system flexible for future changes.
+
+---
+
+## Admin features
+
+The system includes an admin-focused API that allows:
+
+- Updating feature rollout percentages
+- Persisting configuration changes
+- Immediately affecting application behavior
+
+Access to these operations is restricted to authorized users.
 
 ---
 
 ## Tech stack
 
-**Backend**
 - ASP.NET Core
 - C#
 - Entity Framework Core
+- RESTful API
 
-**Frontend**
-- Angular
-- TypeScript
-- HTML
-- CSS
+---
+
+## Project scope
+
+This is an **educational project**, intentionally kept simple.
+
+- No advanced authentication flows
+- No environment-specific configuration files documented
+- Focus on backend logic and architecture clarity
+
+The frontend for this project is available in a separate repository:  
+- https://github.com/MarcossSantoss/feature-flag-ui
 
 ---

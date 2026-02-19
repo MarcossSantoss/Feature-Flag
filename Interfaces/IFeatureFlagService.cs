@@ -1,8 +1,4 @@
-﻿using FeatureFlag.Application.DTOs;
-using FeatureFlag.Domain.Entities;
-using Microsoft.AspNetCore.Mvc;
-
-namespace FeatureFlag.Interfaces
+﻿namespace FeatureFlag.Interfaces
 {
     public interface IFeatureFlagService
     {
